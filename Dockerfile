@@ -44,14 +44,15 @@ RUN useradd -u 1000 -ms /bin/bash -g www www
 # Set working directory
 WORKDIR /data
 
+RUN mkdir /usr/local/composer-cache
+RUN chown www /usr/local/composer-cache
+
 # Change current user to www
 USER www
 
-RUN mkdir /tmp/composer-cache
-
 # Feeds composer local cache
-ADD _websocket/composer.json /tmp/composer-cache/
-RUN sh -c "cd /tmp/composer-cache; composer install --no-autoloader --no-progress --no-suggest "
+ADD composer.json /usr/local/composer-cache/
+RUN sh -c "cd /usr/local/composer-cache; composer install --no-autoloader --no-progress --no-suggest "
 
 # The real command is specified in docker-compose.yml
 CMD ["sleep", "10"]
