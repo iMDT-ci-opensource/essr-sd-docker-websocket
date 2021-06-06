@@ -52,6 +52,7 @@ USER www
 
 # Feeds composer local cache
 ADD composer.json /usr/local/composer-cache/
+ADD composer.lock /usr/local/composer-cache/
 RUN sh -c "cd /usr/local/composer-cache; composer install --no-autoloader --no-progress --no-suggest "
 
 # The real command is specified in docker-compose.yml
